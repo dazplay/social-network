@@ -6,7 +6,6 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static uk.me.imprison.social.ConsoleSocialApplication.createConsoleSocialApplication;
 import static uk.me.imprison.social.FakeConsoleIn.consoleInputWithCommands;
 
 public class ConsoleSocialApplicationTest {

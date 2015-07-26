@@ -12,10 +12,11 @@ public class SocialCommandParserTest {
 
     private final Social social = context.mock(Social.class);
 
-    private SocialCommandParser parser = new SocialCommandParser(social);
+    private final StaticClock clock = new StaticClock();
+    private final SocialCommandParser parser = new SocialCommandParser(social, clock);
 
     @Test public void postActionIfHasPostSyntax() {
-        final Message parsedMessage = message().by("Bob").withContent("I like hamburgers!").build();
+        final Message parsedMessage = message().by("Bob").withContent("I like hamburgers!").timestamped(clock.now()).build();
 
         context.checking(new Expectations() {{
             oneOf(social).post(parsedMessage);
@@ -28,7 +29,7 @@ public class SocialCommandParserTest {
         final UserName bob = UserName.fromString("Bob");
 
         context.checking(new Expectations() {{
-            oneOf(social).showTimelineFor(bob);
+            oneOf(social).showTimelineFor(bob, clock.now());
         }});
 
         parser.parse("Bob");

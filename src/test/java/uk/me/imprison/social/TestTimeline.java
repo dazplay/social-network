@@ -3,7 +3,6 @@ package uk.me.imprison.social;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
-import static org.apache.commons.io.IOUtils.toInputStream;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
@@ -21,12 +20,12 @@ public class TestTimeline {
                         "Bob -> Good game though.",
                         "Alice");
 
-        createConsoleSocialApplication(consoleIn, consoleOut).start();
+        createConsoleSocialApplication(consoleIn, consoleOut, new StaticClock()).start();
 
-        assertThat(consoleOut.lines(), contains(entryWithMessage("I love the weather today")));
+        assertThat(consoleOut.lines(), contains(entry("I love the weather today (0 seconds ago)")));
     }
 
-    private Matcher<String> entryWithMessage(String message) {
+    private Matcher<String> entry(String message) {
         return equalTo(message);
     }
 

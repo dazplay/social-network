@@ -5,17 +5,25 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
+import java.time.LocalDateTime;
+
 public class Message {
     private final UserName userName;
     private final String content;
+    private LocalDateTime timestamp;
 
-    public Message(UserName userName, String content) {
+    public Message(UserName userName, String content, LocalDateTime timestamp) {
         this.userName = userName;
         this.content = content;
+        this.timestamp = timestamp;
     }
 
     public String content() {
         return content;
+    }
+
+    public LocalDateTime timestamp() {
+        return timestamp;
     }
 
     @Override public String toString() {
@@ -38,6 +46,8 @@ public class Message {
 
         private String content;
         private UserName userName;
+        private LocalDateTime timestamp;
+
         public MessageBuilder by(String name) {
             return by(UserName.fromString(name));
         }
@@ -52,11 +62,16 @@ public class Message {
             return this;
         }
 
-        public Message build() {
-            return new Message(userName, content);
+        public MessageBuilder timestamped(LocalDateTime timestamp) {
+            this.timestamp = timestamp;
+            return this;
         }
 
+        public Message build() {
+            return new Message(userName, content, timestamp);
+        }
     }
+
     public static Matcher<Message> hasUserName(Matcher<UserName> userNameMatcher) {
         return new FeatureMatcher<Message, UserName>(userNameMatcher, "userName", "userName") {
             @Override protected UserName featureValueOf(Message message) {

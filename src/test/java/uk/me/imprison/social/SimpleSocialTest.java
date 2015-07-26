@@ -1,5 +1,6 @@
 package uk.me.imprison.social;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.jmock.Expectations;
@@ -16,6 +17,8 @@ public class SimpleSocialTest {
     private final SocialFeed feed = context.mock(SocialFeed.class);
     private final PostsStore posts = context.mock(PostsStore.class);
 
+    private final LocalDateTime requestTime = LocalDateTime.now();
+
     private final SimpleSocial social = new SimpleSocial(feed, posts);
 
     @Test public void timelineBelongingToUserIsShown() {
@@ -23,9 +26,9 @@ public class SimpleSocialTest {
         final List<Message> bobsPosts = newArrayList();
         context.checking(new Expectations() {{
             allowing(posts).getPostsBelongingTo(bob); will(returnValue(bobsPosts));
-            oneOf(feed).showTimeLineWith(bobsPosts);
+            oneOf(feed).showTimeLineWith(bobsPosts, requestTime);
         }});
-        social.showTimelineFor(bob);
+        social.showTimelineFor(bob, requestTime);
     }
 
     @Test public void postsAreStored() {

@@ -1,5 +1,6 @@
 package uk.me.imprison.social;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SimpleSocial implements Social {
@@ -11,9 +12,9 @@ public class SimpleSocial implements Social {
         this.posts = posts;
     }
 
-    @Override public void showTimelineFor(UserName user) {
+    @Override public void showTimelineFor(UserName user, LocalDateTime withRequestTime) {
         final List<Message> usersPosts = posts.getPostsBelongingTo(user);
-        feed.showTimeLineWith(usersPosts);
+        feed.showTimeLineWith(usersPosts, withRequestTime);
     }
 
     @Override public void post(Message message) {
