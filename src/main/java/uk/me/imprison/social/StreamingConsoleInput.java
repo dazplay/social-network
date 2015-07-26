@@ -9,8 +9,8 @@ public class StreamingConsoleInput implements ConsoleInput {
     private final InputStream inputStream;
 
     public StreamingConsoleInput(InputStream inputStream) {
-            this.inputStream = inputStream;
-        }
+        this.inputStream = inputStream;
+    }
 
     @Override public Iterator<String> iterator() {
         Scanner scanner = new Scanner(inputStream);
@@ -26,4 +26,5 @@ public class StreamingConsoleInput implements ConsoleInput {
         };
     }
 }
+
 

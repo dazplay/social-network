@@ -14,4 +14,8 @@ public class FakeConsoleOutput implements ConsoleOutput {
     @Override public void println(final String content) {
         lines.add(content);
     }
+
+    @Override public void awaitingCommand() {
+
+    }
 }

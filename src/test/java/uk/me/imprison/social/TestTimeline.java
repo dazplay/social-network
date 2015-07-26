@@ -8,6 +8,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 import static uk.me.imprison.social.ConsoleSocialApplication.createConsoleSocialApplication;
+import static uk.me.imprison.social.FakeConsoleIn.consoleInputWithCommands;
 
 public class TestTimeline {
     private final FakeConsoleOutput consoleOut = new FakeConsoleOutput();
@@ -18,11 +19,9 @@ public class TestTimeline {
                         "Alice -> I love the weather today",
                         "Bob -> Damn! We lost!",
                         "Bob -> Good game though.",
-                        "Alice",
-                        "exit");
+                        "Alice");
 
-        ConsoleSocialApplication app = createConsoleSocialApplication(consoleIn, consoleOut);
-        app.start();
+        createConsoleSocialApplication(consoleIn, consoleOut).start();
 
         assertThat(consoleOut.lines(), contains(entryWithMessage("I love the weather today")));
     }
@@ -30,15 +29,5 @@ public class TestTimeline {
     private Matcher<String> entryWithMessage(String message) {
         return equalTo(message);
     }
-
-    private ConsoleInput consoleInputWithCommands(String... commands) {
-        final StringBuilder commandsStream = new StringBuilder();
-        for (String command : commands) {
-            commandsStream.append(command).append("\n");
-        }
-        return new StreamingConsoleInput(toInputStream(commandsStream.toString()));
-    }
-
-
 
 }

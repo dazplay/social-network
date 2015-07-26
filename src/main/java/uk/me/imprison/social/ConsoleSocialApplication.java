@@ -8,20 +8,24 @@ public class ConsoleSocialApplication {
         Social social = new SimpleSocial(feed, postsStore);
         CommandParser commandSource = new SocialCommandParser(social);
 
-        return new ConsoleSocialApplication(consoleIn, commandSource);
+        return new ConsoleSocialApplication(consoleIn, consoleOut, commandSource);
     }
 
     private ConsoleInput consoleIn;
+    private ConsoleOutput consoleOut;
     private CommandParser parser;
 
-    public ConsoleSocialApplication(final ConsoleInput consoleIn, final CommandParser parser) {
+    public ConsoleSocialApplication(final ConsoleInput consoleIn, final ConsoleOutput consoleOut, final CommandParser parser) {
         this.consoleIn = consoleIn;
+        this.consoleOut = consoleOut;
         this.parser = parser;
     }
 
     public void start() {
+        consoleOut.awaitingCommand();
         for (String line : consoleIn) {
             parser.parse(line);
+            consoleOut.awaitingCommand();
         }
     }
 }
