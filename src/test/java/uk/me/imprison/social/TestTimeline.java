@@ -7,6 +7,7 @@ import static org.apache.commons.io.IOUtils.toInputStream;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
+import static uk.me.imprison.social.ConsoleSocialApplication.createConsoleSocialApplication;
 
 public class TestTimeline {
     private final FakeConsoleOutput consoleOut = new FakeConsoleOutput();
@@ -39,13 +40,5 @@ public class TestTimeline {
     }
 
 
-    public ConsoleSocialApplication createConsoleSocialApplication(ConsoleInput consoleIn, ConsoleOutput consoleOut) {
-        SocialFeed feed = new ConsolePrintingSocialFeed(consoleOut);
-        PostsStore postsStore = new InMemoryPostsStore();
 
-        Social social = new SimpleSocial(feed, postsStore);
-        CommandParser commandSource = new SocialCommandParser(social);
-
-        return new ConsoleSocialApplication(consoleIn, commandSource);
-    }
 }

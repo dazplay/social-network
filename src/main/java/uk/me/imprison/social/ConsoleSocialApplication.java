@@ -1,6 +1,16 @@
 package uk.me.imprison.social;
 
 public class ConsoleSocialApplication {
+    public static ConsoleSocialApplication createConsoleSocialApplication(ConsoleInput consoleIn, ConsoleOutput consoleOut) {
+        SocialFeed feed = new ConsolePrintingSocialFeed(consoleOut);
+        PostsStore postsStore = new InMemoryPostsStore();
+
+        Social social = new SimpleSocial(feed, postsStore);
+        CommandParser commandSource = new SocialCommandParser(social);
+
+        return new ConsoleSocialApplication(consoleIn, commandSource);
+    }
+
     private ConsoleInput consoleIn;
     private CommandParser parser;
 
