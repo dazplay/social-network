@@ -5,8 +5,9 @@ public class ConsoleSocialApplication {
             ConsoleInput consoleIn, ConsoleOutput consoleOut, final ApplicationClock clock) {
         SocialFeed feed = new ConsolePrintingSocialFeed(consoleOut);
         PostsStore postsStore = new InMemoryPostsStore();
+        SocialNetwork network = new InMemorySocialNetwork();
 
-        Social social = new SimpleSocial(feed, postsStore);
+        Social social = new SimpleSocial(feed, postsStore, network);
         CommandParser commandSource = new SocialCommandParser(social, clock);
 
 

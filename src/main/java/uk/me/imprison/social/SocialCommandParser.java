@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class SocialCommandParser implements CommandParser {
     private static final String UPTO_SPACE = "\\s";
     private static final String POSTING = "->";
+    private static final String FOLLOWING = "follows";
+    private static final String WALL = "wall";
 
     private final Social social;
     private ApplicationClock clock;
@@ -28,6 +30,15 @@ public class SocialCommandParser implements CommandParser {
             Message message = new Message(userName, scanner.nextLine().trim(), clock.now());
             social.post(message);
             return;
+        }
+
+        if (actionToken.equals(FOLLOWING)) {
+            UserName followee = UserName.fromString(scanner.next());
+            social.follow(userName, followee);
+            return;
+        }
+        if (actionToken.equals(WALL)) {
+            social.showWallFor(userName, clock.now());
         }
     }
 }

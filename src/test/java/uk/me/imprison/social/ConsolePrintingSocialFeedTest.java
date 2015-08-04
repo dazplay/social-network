@@ -18,7 +18,12 @@ public class ConsolePrintingSocialFeedTest {
 
     private final ConsolePrintingSocialFeed socialFeed = new ConsolePrintingSocialFeed(console);
 
-    @Test public void messagesArePrintedToConsole() {
+    @Test public void wallmessagesArePrintedToConsole() {
+        socialFeed.showWallWith(asList(message1, message2), requestTime);
+        assertThat(console.lines(), contains("Bob - Say it better! (10 seconds ago)", "Bob - Say cheese! (2 minutes ago)"));
+    }
+
+    @Test public void timelineMessagesArePrintedToConsole() {
         socialFeed.showTimeLineWith(asList(message1, message2), requestTime);
 
         assertThat(console.lines(), contains("Say it better! (10 seconds ago)", "Say cheese! (2 minutes ago)"));

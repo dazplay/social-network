@@ -15,6 +15,27 @@ public class SocialCommandParserTest {
     private final StaticClock clock = new StaticClock();
     private final SocialCommandParser parser = new SocialCommandParser(social, clock);
 
+    @Test public void wallActionIfWallSyntax() {
+        final UserName bob = UserName.fromString("Bob");
+
+        context.checking(new Expectations() {{
+            oneOf(social).showWallFor(bob, clock.now());
+        }});
+
+        parser.parse("Bob wall");
+    }
+
+    @Test public void followActionIfIsFollowSyntax() {
+        final UserName bob = UserName.fromString("Bob");
+        final UserName alice = UserName.fromString("Alice");
+
+        context.checking(new Expectations() {{
+            oneOf(social).follow(bob, alice);
+        }});
+
+        parser.parse("Bob follows Alice");
+    }
+
     @Test public void postActionIfHasPostSyntax() {
         final Message parsedMessage = message().by("Bob").withContent("I like hamburgers!").timestamped(clock.now()).build();
 

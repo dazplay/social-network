@@ -1,7 +1,10 @@
-package uk.me.imprison.social;
+package uk.me.imprison.social.e2e;
 
 import org.hamcrest.Matcher;
 import org.junit.Test;
+import uk.me.imprison.social.ConsoleInput;
+import uk.me.imprison.social.FakeConsoleOutput;
+import uk.me.imprison.social.StaticClock;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.contains;

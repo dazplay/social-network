@@ -8,14 +8,18 @@ import org.hamcrest.Matcher;
 import java.time.LocalDateTime;
 
 public class Message {
-    private final UserName userName;
+    private final UserName author;
     private final String content;
     private LocalDateTime timestamp;
 
-    public Message(UserName userName, String content, LocalDateTime timestamp) {
-        this.userName = userName;
+    public Message(UserName author, String content, LocalDateTime timestamp) {
+        this.author = author;
         this.content = content;
         this.timestamp = timestamp;
+    }
+
+    public UserName author() {
+        return author;
     }
 
     public String content() {
@@ -27,7 +31,7 @@ public class Message {
     }
 
     @Override public String toString() {
-        return userName + "->" + content;
+        return author + "->" + content;
     }
 
     @Override public boolean equals(Object that) {
@@ -72,10 +76,10 @@ public class Message {
         }
     }
 
-    public static Matcher<Message> hasUserName(Matcher<UserName> userNameMatcher) {
-        return new FeatureMatcher<Message, UserName>(userNameMatcher, "userName", "userName") {
+    public static Matcher<Message> hasAuthor(Matcher<UserName> userNameMatcher) {
+        return new FeatureMatcher<Message, UserName>(userNameMatcher, "author", "author") {
             @Override protected UserName featureValueOf(Message message) {
-                return message.userName;
+                return message.author;
             }
         };
     }
