@@ -18,8 +18,8 @@ public class ConsolePrintingSocialFeed implements SocialFeed {
         this.out = out;
     }
 
-    @Override public void showTimeLineWith(List<Message> posts, LocalDateTime requestTime) {
-        posts.stream().sorted(mostRecentFirst()).forEach(addToTimelineUsing(requestTime));
+    @Override public void showTimeLineWith(List<Message> messages, LocalDateTime requestTime) {
+        messages.stream().sorted(mostRecentFirst()).forEach(addToTimelineUsing(requestTime));
     }
 
     @Override public void showWallWith(final List<Message> messages, final LocalDateTime requestTime) {
@@ -31,11 +31,11 @@ public class ConsolePrintingSocialFeed implements SocialFeed {
     }
 
     private Consumer<Message> addToTimelineUsing(LocalDateTime requestTime) {
-        return (post) -> out.println(format(USING_TIMELINE_FORMATTING, post.content(), formattedTimeElapsedFor(post, requestTime)));
+        return (message) -> out.println(format(USING_TIMELINE_FORMATTING, message.content(), formattedTimeElapsedFor(message, requestTime)));
     }
 
-    private String formattedTimeElapsedFor(Message post, LocalDateTime requestTime) {
-        Duration elapsedTime = Duration.between(post.timestamp(), requestTime);
+    private String formattedTimeElapsedFor(Message message, LocalDateTime requestTime) {
+        Duration elapsedTime = Duration.between(message.timestamp(), requestTime);
         if (elapsedTime.compareTo(Duration.ofMinutes(1)) < 0) {
             return format("%s seconds", elapsedTime.getSeconds());
         }

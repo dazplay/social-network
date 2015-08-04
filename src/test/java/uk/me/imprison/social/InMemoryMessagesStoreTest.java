@@ -8,8 +8,8 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static uk.me.imprison.social.Message.message;
 
-public class InMemoryPostsStoreTest {
-    private final InMemoryPostsStore store = new InMemoryPostsStore();
+public class InMemoryMessagesStoreTest {
+    private final InMemoryMessagesStore store = new InMemoryMessagesStore();
 
     private final UserName bob = UserName.fromString("Bob");
     private final UserName sophie = UserName.fromString("Sophie");
@@ -22,7 +22,7 @@ public class InMemoryPostsStoreTest {
         store.add(anotherMessageOfBobs);
         store.add(sophiesMessage);
 
-        assertThat(store.getPostsBelongingTo(asList(bob, sophie)), contains(bobsMessage, anotherMessageOfBobs, sophiesMessage));
+        assertThat(store.getMessagesBelongingTo(asList(bob, sophie)), contains(bobsMessage, anotherMessageOfBobs, sophiesMessage));
     }
 
     @Test public void onlyReturnsBobsPosts() {
@@ -30,7 +30,7 @@ public class InMemoryPostsStoreTest {
         store.add(anotherMessageOfBobs);
         store.add(sophiesMessage);
 
-        assertThat(store.getPostsBelongingTo(bob), containsInAnyOrder(bobsMessage, anotherMessageOfBobs));
+        assertThat(store.getMessagesBelongingTo(bob), containsInAnyOrder(bobsMessage, anotherMessageOfBobs));
     }
 
 }

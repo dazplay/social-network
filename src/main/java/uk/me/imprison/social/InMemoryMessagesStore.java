@@ -9,18 +9,18 @@ import com.google.common.collect.Lists;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class InMemoryPostsStore implements PostsStore {
+public class InMemoryMessagesStore implements MessagesStore {
     List<Message> messages = Lists.newArrayList();
 
     @Override public void add(Message message) {
         messages.add(message);
     }
 
-    @Override public List<Message> getPostsBelongingTo(UserName user) {
+    @Override public List<Message> getMessagesBelongingTo(UserName user) {
         return messages.stream().filter(by(user)).collect(toList());
     }
 
-    @Override public List<Message> getPostsBelongingTo(Collection<UserName> users) {
+    @Override public List<Message> getMessagesBelongingTo(Collection<UserName> users) {
         return messages.stream().filter(by(users)).collect(toList());
     }
 

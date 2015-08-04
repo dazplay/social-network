@@ -18,12 +18,12 @@ public class SimpleSocialTest {
     @Rule public JUnitRuleMockery context = new JUnitRuleMockery();
 
     private final SocialFeed feed = context.mock(SocialFeed.class);
-    private final PostsStore posts = context.mock(PostsStore.class);
+    private final MessagesStore messages = context.mock(MessagesStore.class);
     private final SocialNetwork network = context.mock(SocialNetwork.class);
 
     private final LocalDateTime requestTime = LocalDateTime.now();
 
-    private final SimpleSocial social = new SimpleSocial(feed, posts, network);
+    private final SimpleSocial social = new SimpleSocial(feed, messages, network);
 
     @Test public void showWallActionResultsInAllPostsBelongingToUserAndFollowersBeingSentToFeedOrderedByTimestamp() {
         final UserName bob = UserName.fromString("Bob");
@@ -33,7 +33,7 @@ public class SimpleSocialTest {
 
         context.checking(new Expectations() {{
             allowing(network).followeesFor(bob); will(returnValue(followees));
-            allowing(posts).getPostsBelongingTo(asList(bob, alice)); will(returnValue(bobAndAllicesPosts));
+            allowing(messages).getMessagesBelongingTo(asList(bob, alice)); will(returnValue(bobAndAllicesPosts));
             oneOf(feed).showWallWith(bobAndAllicesPosts, requestTime);
         }});
 
@@ -53,18 +53,18 @@ public class SimpleSocialTest {
 
     @Test public void timelineBelongingToUserIsShown() {
         final UserName bob = UserName.fromString("Bob");
-        final List<Message> bobsPosts = newArrayList();
+        final List<Message> bobsMessages = newArrayList();
         context.checking(new Expectations() {{
-            allowing(posts).getPostsBelongingTo(bob); will(returnValue(bobsPosts));
-            oneOf(feed).showTimeLineWith(bobsPosts, requestTime);
+            allowing(messages).getMessagesBelongingTo(bob); will(returnValue(bobsMessages));
+            oneOf(feed).showTimeLineWith(bobsMessages, requestTime);
         }});
         social.showTimelineFor(bob, requestTime);
     }
 
-    @Test public void postsAreStored() {
+    @Test public void postedMessagesAreStored() {
         Message message = message().build();
         context.checking(new Expectations() {{
-            oneOf(posts).add(message);
+            oneOf(messages).add(message);
         }});
         social.post(message);
     }

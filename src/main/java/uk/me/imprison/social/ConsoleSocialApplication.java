@@ -4,10 +4,10 @@ public class ConsoleSocialApplication {
     public static ConsoleSocialApplication createConsoleSocialApplication(
             ConsoleInput consoleIn, ConsoleOutput consoleOut, final ApplicationClock clock) {
         SocialFeed feed = new ConsolePrintingSocialFeed(consoleOut);
-        PostsStore postsStore = new InMemoryPostsStore();
+        MessagesStore messagesStore = new InMemoryMessagesStore();
         SocialNetwork network = new InMemorySocialNetwork();
 
-        Social social = new SimpleSocial(feed, postsStore, network);
+        Social social = new SimpleSocial(feed, messagesStore, network);
         CommandParser commandSource = new SocialCommandParser(social, clock);
 
 
