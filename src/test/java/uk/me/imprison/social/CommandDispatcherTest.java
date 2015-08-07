@@ -7,13 +7,13 @@ import org.junit.Test;
 
 import static uk.me.imprison.social.Message.message;
 
-public class SocialCommandParserTest {
+public class CommandDispatcherTest {
     @Rule public JUnitRuleMockery context = new JUnitRuleMockery();
 
     private final Social social = context.mock(Social.class);
 
     private final StaticClock clock = new StaticClock();
-    private final SocialCommandParser parser = new SocialCommandParser(social, clock);
+    private final CommandDispatcher parser = new CommandDispatcher(social, clock);
 
     @Test public void wallActionIfWallSyntax() {
         final UserName bob = UserName.fromString("Bob");
@@ -22,7 +22,7 @@ public class SocialCommandParserTest {
             oneOf(social).showWallFor(bob, clock.now());
         }});
 
-        parser.parse("Bob wall");
+        parser.execute("Bob wall");
     }
 
     @Test public void followActionIfIsFollowSyntax() {
@@ -33,7 +33,7 @@ public class SocialCommandParserTest {
             oneOf(social).follow(bob, alice);
         }});
 
-        parser.parse("Bob follows Alice");
+        parser.execute("Bob follows Alice");
     }
 
     @Test public void postActionIfHasPostSyntax() {
@@ -43,7 +43,7 @@ public class SocialCommandParserTest {
             oneOf(social).post(parsedMessage);
         }});
 
-        parser.parse("Bob -> I like hamburgers!");
+        parser.execute("Bob -> I like hamburgers!");
     }
 
     @Test public void readActionIfOnlyUserNamePassedIn() {
@@ -53,7 +53,7 @@ public class SocialCommandParserTest {
             oneOf(social).showTimelineFor(bob, clock.now());
         }});
 
-        parser.parse("Bob");
+        parser.execute("Bob");
     }
 
 }

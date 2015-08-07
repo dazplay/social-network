@@ -2,7 +2,7 @@ package uk.me.imprison.social;
 
 import java.util.Scanner;
 
-public class SocialCommandParser implements CommandParser {
+public class CommandDispatcher {
     private static final String UPTO_SPACE = "\\s";
     private static final String POSTING = "->";
     private static final String FOLLOWING = "follows";
@@ -11,12 +11,12 @@ public class SocialCommandParser implements CommandParser {
     private final Social social;
     private ApplicationClock clock;
 
-    public SocialCommandParser(final Social social, final ApplicationClock clock) {
+    public CommandDispatcher(final Social social, final ApplicationClock clock) {
         this.social = social;
         this.clock = clock;
     }
 
-    @Override public void parse(final String line) {
+    public void execute(final String line) {
         Scanner scanner = new Scanner(line).useDelimiter(UPTO_SPACE);
         UserName userName = UserName.fromString(scanner.next());
 

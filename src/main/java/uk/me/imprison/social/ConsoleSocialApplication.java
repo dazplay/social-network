@@ -7,24 +7,24 @@ public class ConsoleSocialApplication {
         SocialNetwork network = new InMemorySocialNetwork();
 
         Social social = new SimpleSocial(feed, messagesStore, network);
-        CommandParser commandSource = new SocialCommandParser(social, clock);
+        CommandDispatcher dispatcher = new CommandDispatcher(social, clock);
 
 
-        return new ConsoleSocialApplication(console, commandSource);
+        return new ConsoleSocialApplication(console, dispatcher);
     }
 
     private Console console;
-    private CommandParser parser;
+    private CommandDispatcher dispatcher;
 
-    public ConsoleSocialApplication(final Console console, final CommandParser parser) {
+    public ConsoleSocialApplication(final Console console, final CommandDispatcher dispatcher) {
         this.console = console;
-        this.parser = parser;
+        this.dispatcher = dispatcher;
     }
 
     public void start() {
         while (console.hasCommand()) {
             String command = console.readCommand();
-            parser.parse(command);
+            dispatcher.execute(command);
         }
 
     }
