@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.me.imprison</groupId>
-    <artifactId>social-network</artifactId>
+    <artifactId>uk.me.imprison.social.social-network</artifactId>
     <version>0.0.1</version>
 
     <build>
@@ -28,7 +28,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.4.0</version>
                 <configuration>
-                    <mainClass>uk.me.imprison.social.Main</mainClass>
+                    <mainClass>uk.me.imprison.uk.me.imprison.social.social.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -37,12 +37,12 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <finalName>social-network</finalName>
+                    <finalName>uk.me.imprison.social.social-network</finalName>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>uk.me.imprison.social.Main</mainClass>
+                            <mainClass>uk.me.imprison.uk.me.imprison.social.social.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -12,10 +12,10 @@ public class ConsolePrintingSocialFeed implements SocialFeed {
     public static final String USING_WALL_FORMATTING = "%s - %s (%s ago)";
     public static final String USING_TIMELINE_FORMATTING = "%s (%s ago)";
 
-    private final ConsoleOutput out;
+    private final Console console;
 
-    public ConsolePrintingSocialFeed(ConsoleOutput out) {
-        this.out = out;
+    public ConsolePrintingSocialFeed(Console console) {
+        this.console = console;
     }
 
     @Override public void showTimeLineWith(List<Message> messages, LocalDateTime requestTime) {
@@ -27,11 +27,11 @@ public class ConsolePrintingSocialFeed implements SocialFeed {
     }
 
     private Consumer<Message> addToWallUsing(final LocalDateTime requestTime) {
-        return (message) -> out.println(format(USING_WALL_FORMATTING, message.author(), message.content(), formattedTimeElapsedFor(message, requestTime)));
+        return (message) -> console.println(format(USING_WALL_FORMATTING, message.author(), message.content(), formattedTimeElapsedFor(message, requestTime)));
     }
 
     private Consumer<Message> addToTimelineUsing(LocalDateTime requestTime) {
-        return (message) -> out.println(format(USING_TIMELINE_FORMATTING, message.content(), formattedTimeElapsedFor(message, requestTime)));
+        return (message) -> console.println(format(USING_TIMELINE_FORMATTING, message.content(), formattedTimeElapsedFor(message, requestTime)));
     }
 
     private String formattedTimeElapsedFor(Message message, LocalDateTime requestTime) {

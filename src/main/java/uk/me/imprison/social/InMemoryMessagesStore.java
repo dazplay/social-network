@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
 
-import com.google.common.collect.Lists;
-
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.collectingAndThen;

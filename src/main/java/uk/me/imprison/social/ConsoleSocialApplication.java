@@ -1,9 +1,8 @@
 package uk.me.imprison.social;
 
 public class ConsoleSocialApplication {
-    public static ConsoleSocialApplication createConsoleSocialApplication(
-            ConsoleInput consoleIn, ConsoleOutput consoleOut, final ApplicationClock clock) {
-        SocialFeed feed = new ConsolePrintingSocialFeed(consoleOut);
+    public static ConsoleSocialApplication createConsoleSocialApplication(Console console, final ApplicationClock clock) {
+        SocialFeed feed = new ConsolePrintingSocialFeed(console);
         MessagesStore messagesStore = new InMemoryMessagesStore();
         SocialNetwork network = new InMemorySocialNetwork();
 
@@ -11,24 +10,22 @@ public class ConsoleSocialApplication {
         CommandParser commandSource = new SocialCommandParser(social, clock);
 
 
-        return new ConsoleSocialApplication(consoleIn, consoleOut, commandSource);
+        return new ConsoleSocialApplication(console, commandSource);
     }
 
-    private ConsoleInput consoleIn;
-    private ConsoleOutput consoleOut;
+    private Console console;
     private CommandParser parser;
 
-    public ConsoleSocialApplication(final ConsoleInput consoleIn, final ConsoleOutput consoleOut, final CommandParser parser) {
-        this.consoleIn = consoleIn;
-        this.consoleOut = consoleOut;
+    public ConsoleSocialApplication(final Console console, final CommandParser parser) {
+        this.console = console;
         this.parser = parser;
     }
 
     public void start() {
-        consoleOut.awaitingCommand();
-        for (String line : consoleIn) {
-            parser.parse(line);
-            consoleOut.awaitingCommand();
+        while (console.hasCommand()) {
+            String command = console.readCommand();
+            parser.parse(command);
         }
+
     }
 }

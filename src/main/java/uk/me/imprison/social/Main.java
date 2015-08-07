@@ -8,10 +8,7 @@ import static uk.me.imprison.social.ConsoleSocialApplication.createConsoleSocial
 public class Main {
     public static void main(String[] args) {
         ConsoleSocialApplication app =
-                createConsoleSocialApplication(
-                        new StreamingConsoleInput(System.in),
-                        new StreamingConsoleOutput(System.out),
-                        utcClock());
+                createConsoleSocialApplication(new StreamingConsole(System.in, System.out), utcClock());
         app.start();
     }
 

@@ -14,7 +14,7 @@ public class ConsolePrintingSocialFeedTest {
     private final Message message1 = message().by("Bob").withContent("Say cheese!").timestamped(requestTime.minusMinutes(2)).build();
     private final Message message2 = message().by("Bob").withContent("Say it better!").timestamped(requestTime.minusSeconds(10)).build();
 
-    private final FakeConsoleOutput console = new FakeConsoleOutput();
+    private final FakeConsole console = FakeConsole.fakeConsole();
 
     private final ConsolePrintingSocialFeed socialFeed = new ConsolePrintingSocialFeed(console);
 
